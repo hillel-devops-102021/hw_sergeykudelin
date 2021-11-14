@@ -1,2 +1,3 @@
 First line in project
 Lviv is a city in the east of the country
+Lugansk is a city in the east of the country
