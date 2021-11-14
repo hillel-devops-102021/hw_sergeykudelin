@@ -1,1 +1,3 @@
 First line in project
+Odessa is a city in the south of the country
+Kiev is a city in the north of the country
