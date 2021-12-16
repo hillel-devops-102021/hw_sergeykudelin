@@ -1,0 +1,47 @@
+version: "3"
+services:
+    frontend:
+        build: ./frontend
+        image: hilleldevops102021/frontend:0.0.2
+        ports:
+            - "8080:4100"
+        networks:
+            - public
+        environment:
+            - REACT_APP_BACKEND_URL=http://localhost:8081/api
+    backend:
+        build: ./backend
+        image: hilleldevops102021/backend:0.0.1
+        depends_on:
+            - mongo
+        environment:
+            PORT: '8081'
+            NODE_ENV: 'production'
+            MONGO_DB_URI: 'mongodb://mongo/conduit'
+            SECRET: 'secret'
+        # healthcheck:
+        #     test: ["CMD", "curl", "-f", "http://127.0.0.1:8081/api/status"]
+        #     interval: 10m
+        #     timeout: 10s
+        #     retries: 3
+        ports: 
+            - 8081:8081
+        restart: on-failure
+        networks:
+            - public
+            - private
+    mongo:
+        image: mongo:latest
+        expose:
+            - 27017
+        restart: on-failure
+        volumes:
+            - data:/data/db
+        networks:
+            - private
+    
+volumes:
+    data:
+networks:
+    private:
+    public:
