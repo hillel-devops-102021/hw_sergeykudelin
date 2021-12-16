@@ -1,0 +1,13 @@
+---
+JavaScript: true 
+engines:
+  eslint:
+    enabled: true
+ratings:
+   paths:
+   - "lib/**/*"
+exclude_paths:
+- node_modules/**/*
+- spec/**/*
+- "**/vendor/**/*"
+- test/**
