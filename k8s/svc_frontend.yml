@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fe-realworld
+  labels:
+    app: realworld
+    type: frontend
+spec:
+  selector:
+    app: realworld
+    type: frontend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 4100
