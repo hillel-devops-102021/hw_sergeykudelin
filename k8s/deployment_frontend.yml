@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-realworld
+  labels:
+    app: realworld
+    type: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: realworld
+      type: frontend
+  template:
+    metadata:
+      labels:
+        app: realworld
+        type: frontend
+    spec:
+      containers:
+      - name: fe-realworld
+        image: tomahawksmail/hillel-frontend:0.0.2
+        env:
+        - name: REACT_APP_BACKEND_URL
+          value: "http://backend.realworld.local.io/api"
+        ports:
+          - containerPort: 4100                                
+        imagePullPolicy: Always
