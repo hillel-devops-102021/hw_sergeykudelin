@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: be-realworld
+  labels:
+    app: realworld
+    type: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: realworld
+      type: backend
+  template:
+    metadata:
+      labels:
+        app: realworld
+        type: backend
+    spec:
+      containers:
+      - name: be-realworld
+        image: sergeykudelin/hillel-backend:{{ .Values.image.tag }}
+        ports:
+          - containerPort: 8081                               
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /api/status
+            port: 8081
+          initialDelaySeconds: 30
+          timeoutSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /api/status
+            port: 8081
+          initialDelaySeconds: 30
+          timeoutSeconds: 15
+        env:
+        - name: PORT
+          value: "8081"
+        - name: NODE_ENV
+          value: "production"
+        - name: MONGO_DB_URI
+          value: "mongodb://mongo/conduit"
+        - name: SECRET
+          value: "secret"

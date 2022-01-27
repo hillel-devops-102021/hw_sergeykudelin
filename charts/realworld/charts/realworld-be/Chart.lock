@@ -1,0 +1,6 @@
+dependencies:
+- name: mongo
+  repository: file://../mongo
+  version: 0.1.0
+digest: sha256:a7dcb1d14d73b52bdf7df4c2a1af5383f76c68b41a3ccf14ff8414b9684d075a
+generated: "2021-08-07T00:33:25.755228+03:00"

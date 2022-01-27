@@ -1,0 +1,10 @@
+apiVersion: v2
+appVersion: 1.16.0
+dependencies:
+- name: mongo
+  repository: file://../mongo
+  version: 0.1.0
+description: A Helm chart for Kubernetes
+name: realworld-be
+type: application
+version: 0.1.0

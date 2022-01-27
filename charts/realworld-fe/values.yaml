@@ -1,0 +1,4 @@
+image:
+  tag: "0.0.7"
+ingress:
+  host: "realworld.local.io"

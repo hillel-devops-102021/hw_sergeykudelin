@@ -1,0 +1,5 @@
+realworld-be:
+  image:
+    tag: "0.0.1"
+  ingress:
+    host: "backend.dev.sergeykudelin.pp.ua"
