@@ -7,6 +7,9 @@ name = "pypi"
 ansible = "==2.10"
 cryptography = "==3.4.8"
 boto3 = "*"
+molecule = "*"
+molecule-vagrant = "*"
+pytest-testinfra = "*"
 
 [dev-packages]
 

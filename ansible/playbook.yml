@@ -4,36 +4,13 @@
   become: true
   gather_facts: false
   vars:
-    document_root: /var/www/html
     app_root: ../sample_html_site
-    ansible_python_interpreter: "/usr/bin/env python3"
-  vars_files:
-    - secrets.yml
+    document_root: /var/www/html
+  
+  roles:
+    - nginx
+
   tasks:
-    - name: Install python for Ansible 
-      raw: test -e /usr/bin/python3 || apt -y update && apt install -y python3-minimal
-      changed_when: False
-    - name: Update apt cache and install python-pip
-      apt:
-        name: python3-pip
-        state: present
-        update_cache: yes
-    - name: Install passlib python package
-      pip:
-        name: passlib
-    - name: Add a user to a password file and ensure permissions are set
-      community.general.htpasswd:
-        path: /etc/nginx/passwdfile
-        name: "{{ NGINX_BASIC_AUTH_LOGIN }}"
-        password: "{{ NGINX_BASIC_AUTH_PASSWORD }}"
-        owner: root
-        group: www-data
-        mode: 0640
-    - name: Update apt cache and install Nginx
-      apt:
-        name: nginx
-        state: present
-        update_cache: yes
     - name: Copy website files to the server's document root
       synchronize:
         src: "{{ app_root }}/"
@@ -42,25 +19,3 @@
         times: no
         delete: yes
       tags: deploy
-    - name: Apply Nginx template
-      template:
-        src: files/nginx/default.j2
-        dest: /etc/nginx/sites-available/default
-      notify: Restart Nginx
-    - name: Enable new site
-      file:
-        src: /etc/nginx/sites-available/default
-        dest: /etc/nginx/sites-enabled/default
-        state: link
-      notify: Restart Nginx
-    - name: Allow all access to tcp port 80
-      ufw:
-        rule: allow
-        port: '80'
-        proto: tcp
-  
-  handlers:
-    - name: Restart Nginx
-      service:
-        name: nginx
-        state: restarted

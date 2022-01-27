@@ -1,0 +1,4 @@
+---
+# defaults file for nginx
+document_root: /var/www/html
+app_root: app

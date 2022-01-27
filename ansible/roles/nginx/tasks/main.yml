@@ -1,0 +1,22 @@
+---
+    - name: Update apt cache and install Nginx
+      apt:
+        name: nginx=1.14.0-*
+        state: present
+        update_cache: yes
+    - name: Apply Nginx template
+      template:
+        src: ../templates/default.j2
+        dest: /etc/nginx/sites-available/default
+      notify: Restart Nginx
+    - name: Enable new site
+      file:
+        src: /etc/nginx/sites-available/default
+        dest: /etc/nginx/sites-enabled/default
+        state: link
+      notify: Restart Nginx
+    - name: Allow all access to tcp port 80
+      ufw:
+        rule: allow
+        port: '80'
+        proto: tcp

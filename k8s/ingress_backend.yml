@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: be-realworld
+spec:
+  rules:
+  - host: "backend.realworld.local.io"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: be-realworld
+            port:
+              number: 8081
