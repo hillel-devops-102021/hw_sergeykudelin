@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-mongo
+  labels:
+    app: realworld
+    type: admin-mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: realworld
+      type: admin-mongo
+  template:
+    metadata:
+      labels:
+        app: realworld
+        type: admin-mongo
+    spec:
+      containers:
+      - name: admin-mongo
+        image: adicom/admin-mongo
+        ports:
+          - containerPort: 8082                               
+        imagePullPolicy: Always
+        env:
+        - name: PORT
+          value: "8082"
+        - name: DB_HOST
+          value: "mongo"
